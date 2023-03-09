@@ -7,15 +7,15 @@ public class Main
 {
 
 
-
     static Scanner scanner = new Scanner(System.in);
 
-    public static float calculateFuelNeeded(float distance, float fuelConsumption)
+    public static float calculateFuelNeeded (float distance, float fuelConsumption)
     {
         float distanceIn100Unit = distance / 100.0f;
-        return  distanceIn100Unit * fuelConsumption;
+        return distanceIn100Unit * fuelConsumption;
     }
-    public static float calculateFuelPrice(float fuelPrice, float distance, float fuelConsumption)
+
+    public static float calculateFuelPrice (float fuelPrice, float distance, float fuelConsumption)
     {
 
         return calculateFuelNeeded(distance, fuelConsumption) * fuelPrice;
@@ -43,6 +43,9 @@ public class Main
         float leastFuelConsumptionPrice = 0;
 
         System.out.println();
+        System.out.println("Distance to travel: " + distanceInKilometers + " km.");
+        System.out.println("Fuel price: " + fuelPricePerLitre + " kr/l.");
+        System.out.println();
         for (Vehicle vehicle : vehicles)
         {
             System.out.println(vehicle.toString());
@@ -52,18 +55,17 @@ public class Main
 
             float totalPrice = calculateFuelPrice(fuelPricePerLitre, distanceInKilometers,
                     vehicle.getFuelConsumption());
-            System.out.printf("Price: %.2f kr", totalPrice);
+            System.out.printf("Price: %.2f kr\n", totalPrice);
             if (leastFuelConsumptionPrice == 0 || leastFuelConsumptionPrice > totalPrice)
             {
                 leastFuelConsumptionPrice = totalPrice;
                 leastFuelConsumptionBrandModelName = String.format("%s %s (%d)", vehicle.getBrand(),
                         vehicle.getModel(), vehicle.getYear());
             }
-            System.out.println("\n");
+            System.out.println();
         }
         System.out.println();
-        System.out.println(leastFuelConsumptionBrandModelName + " är billigast, den kostar bara " + leastFuelConsumptionPrice + " per sträcka." );
-
+        System.out.println(leastFuelConsumptionBrandModelName + " är billigast, den kostar bara " + leastFuelConsumptionPrice + " kr per sträcka.");
 
 
     }
