@@ -1,6 +1,7 @@
 import Vehicles.*;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main
@@ -23,29 +24,45 @@ public class Main
 
     public static void main (String[] args)
     {
-        Car car = new Car("BMW", "M5", 220, 2022, 7.5f, 4);
-        Truck truck = new Truck("Scania", "R450", 90, 2015, 2, 35, 40);
-        MotorCycle motorCycle = new MotorCycle("Harley-Davidson", "Sporster", 200, 2019, 5, false);
+        Car bmwCar = new Car("BMW", "M5", 220, 2022, 7.5f, 4);
+        Truck scaniaTruck = new Truck("Scania", "R450", 90, 2015, 2, 35, 40);
+        MotorCycle harleyDavidsonMotorCycle = new MotorCycle("Harley-Davidson", "Sporster", 200, 2019, 5, false);
 
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-        vehicles.add(car);
-        vehicles.add(truck);
-        vehicles.add(motorCycle);
+        vehicles.add(bmwCar);
+        vehicles.add(scaniaTruck);
+        vehicles.add(harleyDavidsonMotorCycle);
 
-        System.out.print("Distance to travel: ");
-        float distanceInKilometers = scanner.nextFloat();
+        float distanceInKilometers;
+        float fuelPricePerLitre;
 
-        System.out.print("Fuel price: ");
-        float fuelPricePerLitre = scanner.nextFloat();
+        // Ta in inputs från användare för att sen använda dem i beräkningarna.
+        while (true) {
+            try {
+                System.out.print("Distance to travel: ");
+                distanceInKilometers = scanner.nextFloat();
 
+                System.out.print("Fuel price: ");
+                fuelPricePerLitre = scanner.nextFloat();
+
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Wrong input, try again. " + e.getMessage());
+                scanner.nextLine(); // consume invalid input
+            }
+        }
+
+        // Variabler som sparar data om billigaste fordon för resan.
         String leastFuelConsumptionBrandModelName = "";
         float leastFuelConsumptionPrice = 0;
 
-        System.out.println();
+
+        System.out.println("================================");
         System.out.println("Distance to travel: " + distanceInKilometers + " km.");
         System.out.println("Fuel price: " + fuelPricePerLitre + " kr/l.");
         System.out.println();
+        // Loopar genom alla elementer i ArrayList vehicles för att printa ut kort info samt beräkningarna.
         for (Vehicle vehicle : vehicles)
         {
             System.out.println(vehicle.toString());
@@ -64,7 +81,8 @@ public class Main
             }
             System.out.println();
         }
-        System.out.println();
+
+        // Slut meddelande om vilket fordon som är snålast för körning.
         System.out.println(leastFuelConsumptionBrandModelName + " är billigast, den kostar bara " + leastFuelConsumptionPrice + " kr per sträcka.");
 
 
